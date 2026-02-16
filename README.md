@@ -117,4 +117,4 @@ There's a `render.yaml` for deploying to Render. You'll need to update the place
 | Admin | Everything + user management + analytics |
 
 
-Actual Link to the Main Application : https://ecommerce-frontend-lq52.onrender.com/
+Actual Link to the Main Application(DEMO LINK) : https://ecommerce-frontend-lq52.onrender.com/
