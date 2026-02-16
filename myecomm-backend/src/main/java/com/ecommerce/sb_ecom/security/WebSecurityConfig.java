@@ -235,7 +235,7 @@ public class WebSecurityConfig {
                         .requestMatchers("/images/**").permitAll()
                         .requestMatchers("/error").permitAll()
 
-                        // 🔥 EXPLICIT ADMIN DELETE
+                        // EXPLICIT ADMIN DELETE
                         .requestMatchers(HttpMethod.DELETE, "/api/admin/products/**")
                         .hasRole("ADMIN")
 
