@@ -1,108 +1,3 @@
-//package com.ecommerce.sb_ecom.security;
-//
-//import com.ecommerce.sb_ecom.model.AppRole;
-//import com.ecommerce.sb_ecom.model.Role;
-//import com.ecommerce.sb_ecom.model.User;
-//import com.ecommerce.sb_ecom.repositories.RoleRepository;
-//import com.ecommerce.sb_ecom.repositories.UserRepository;
-//import com.ecommerce.sb_ecom.security.jwt.AuthEntryPointJwt;
-//import com.ecommerce.sb_ecom.security.jwt.AuthTokenFilter;
-//import com.ecommerce.sb_ecom.security.services.UserDetailsImpl;
-//import com.ecommerce.sb_ecom.security.services.UserDetailsServiceImpl;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.boot.CommandLineRunner;
-//import org.springframework.context.annotation.Bean;
-//import org.springframework.context.annotation.Configuration;
-//import org.springframework.security.authentication.AuthenticationManager;
-//import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-//import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-//import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
-//import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-//import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-//import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
-//import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-//import org.springframework.security.config.annotation.web.configurers.AuthorizeHttpRequestsConfigurer;
-//import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
-//import org.springframework.security.config.http.SessionCreationPolicy;
-//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-//import org.springframework.security.crypto.password.PasswordEncoder;
-//import org.springframework.security.web.SecurityFilterChain;
-//import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-//
-//import java.util.Set;
-//
-//@Configuration
-//@EnableWebSecurity
-////@EnableMethodSecurity
-//public class WebSecurityConfig {
-//
-//    @Autowired
-//    UserDetailsServiceImpl userDetailsService;
-//
-//    @Autowired
-//    private AuthEntryPointJwt unauthorizedHandler;
-//
-//    @Bean
-//    public AuthTokenFilter authenticationJwtTokenFilter(){
-//       return new AuthTokenFilter();
-//    }
-//
-//    @Bean
-//    public DaoAuthenticationProvider authenticationProvider(){
-// DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-//  authenticationProvider.setUserDetailsService(userDetailsService);
-//  authenticationProvider.setPasswordEncoder(passwordEncoder());
-//  return  authenticationProvider;
-//    }
-////This is exposing the AuthenticationManager bean for use in authController
-//// and in different places
-//    @Bean
-//    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
-//        return authConfig.getAuthenticationManager();
-//    }
-//    @Bean
-//    public PasswordEncoder passwordEncoder(){
-//        return new BCryptPasswordEncoder();
-//    }
-//
-//    @Bean
-//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-//        http.csrf(csrf -> csrf.disable())
-//                .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
-//                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-//                .authorizeHttpRequests(auth ->
-//                        auth.requestMatchers("/api/auth/**").permitAll()
-//                                .requestMatchers("/v3/api-docs/**").permitAll()
-//                                .requestMatchers("/h2-console/**").permitAll()
-//                                //.requestMatchers("/api/admin/**").permitAll()
-//                                .requestMatchers("/api/public/**").permitAll()
-//                                .requestMatchers("/swagger-ui/**").permitAll()
-//                                .requestMatchers("/api/test/**").permitAll()
-//                                .requestMatchers("/images/**").permitAll()
-//                                .anyRequest().authenticated()
-//                );
-//
-//        http.authenticationProvider(authenticationProvider());
-//
-//        http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
-//        http.headers(headers->headers.frameOptions(
-//                frameOptions -> frameOptions.sameOrigin()
-//        ));
-//        return http.build();
-//    }
-//
-//    @Bean
-//    public WebSecurityCustomizer webSecurityCustomizer() {
-//        return (web -> web.ignoring().requestMatchers("/v2/api-docs",
-//                "/configuration/ui",
-//                "/swagger-resources/**",
-//                "/configuration/security",
-//                "/swagger-ui.html",
-//                //"/images/**",
-//                "/webjars/**"));
-//    }
-////This bean creates helps in initializing the database
-
 
 package com.ecommerce.sb_ecom.security;
 
@@ -235,7 +130,7 @@ public class WebSecurityConfig {
                         .requestMatchers("/images/**").permitAll()
                         .requestMatchers("/error").permitAll()
 
-                        // 🔥 EXPLICIT ADMIN DELETE
+                        // EXPLICIT ADMIN DELETE
                         .requestMatchers(HttpMethod.DELETE, "/api/admin/products/**")
                         .hasRole("ADMIN")
 
@@ -323,43 +218,4 @@ public class WebSecurityConfig {
     }
 
 }
-
-
-//    // Database init stays untouched
-//    @Bean
-//    public CommandLineRunner initData(
-//            RoleRepository roleRepository,
-//            UserRepository userRepository,
-//            PasswordEncoder passwordEncoder) {
-//
-//        return args -> {
-//            Role userRole = roleRepository.findByRoleName(AppRole.ROLE_USER)
-//                    .orElseGet(() -> roleRepository.save(new Role(AppRole.ROLE_USER)));
-//
-//            Role sellerRole = roleRepository.findByRoleName(AppRole.ROLE_SELLER)
-//                    .orElseGet(() -> roleRepository.save(new Role(AppRole.ROLE_SELLER)));
-//
-//            Role adminRole = roleRepository.findByRoleName(AppRole.ROLE_ADMIN)
-//                    .orElseGet(() -> roleRepository.save(new Role(AppRole.ROLE_ADMIN)));
-//
-//            Set<Role> userRoles = Set.of(userRole);
-//            Set<Role> sellerRoles = Set.of(sellerRole);
-//            Set<Role> adminRoles = Set.of(userRole, sellerRole, adminRole);
-//
-//            userRepository.findByUserName("user1").ifPresent(u -> {
-//                u.setRoles(userRoles);
-//                userRepository.save(u);
-//            });
-//
-//            userRepository.findByUserName("seller1").ifPresent(u -> {
-//                u.setRoles(sellerRoles);
-//                userRepository.save(u);
-//            });
-//
-//            userRepository.findByUserName("admin").ifPresent(u -> {
-//                u.setRoles(adminRoles);
-//                userRepository.save(u);
-//            });
-//        };
-//    }
 
