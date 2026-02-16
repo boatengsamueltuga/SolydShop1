@@ -115,3 +115,6 @@ There's a `render.yaml` for deploying to Render. You'll need to update the place
 | User | Browse, cart, checkout, orders |
 | Seller | Product management |
 | Admin | Everything + user management + analytics |
+
+
+Actual Link to the Main Application : https://ecommerce-frontend-lq52.onrender.com/
