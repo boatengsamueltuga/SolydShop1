@@ -118,3 +118,4 @@ There's a `render.yaml` for deploying to Render. You'll need to update the place
 
 
 Actual Link to the Main Application(DEMO LINK) : https://ecommerce-frontend-lq52.onrender.com/
+N/B:Link might behave slowly since the App is hosted on a free Plan on render
