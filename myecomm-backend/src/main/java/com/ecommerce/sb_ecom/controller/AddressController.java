@@ -29,7 +29,7 @@ public class AddressController {
 
         return new ResponseEntity<>(savedAddressDTO, HttpStatus.CREATED);
     }
-    //Getting All Addresses
+    //Getting All Addresses of Customer
     @GetMapping("/addresses")
     public ResponseEntity<List<AddressDTO>> getAddress(){
         List<AddressDTO> addressDTOList = addressService.getAddress();
