@@ -3,11 +3,14 @@ myecomm-backend/target/
 myecomm-backend/.idea/
 myecomm-backend/*.iml
 myecomm-backend/images/
+myecomm-backend/src/main/resources/application.properties
 
 # Frontend
 Ecom-Frontend/vite-reactEcomfrontend/node_modules/
 Ecom-Frontend/vite-reactEcomfrontend/dist/
 Ecom-Frontend/vite-reactEcomfrontend/.env
+.env
+.env.*
 
 # OS files
 .DS_Store
